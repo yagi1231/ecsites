@@ -199,7 +199,7 @@ Default output format [None]: json
 
 設定できればAWS CLIを使ってバケットを作成します。
 
-※バケット名はS3上でユニークでなければならないため、`--bucket potepanec`の部分は適宜変更してください。
+※バケット名はS3上でユニークでなければならないため、バケット名「potepanec」の部分は適宜変更してください。
 
 ```sh
 $ aws s3 mb s3://potepanec
