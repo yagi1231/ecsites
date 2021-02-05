@@ -66,6 +66,9 @@ jobs:
           name: Delete old apps if needed
           command: for app_name in $APP_NAMES_TO_REMOVE; do heroku apps:destroy -a $app_name -c $app_name; done
       - run:
+          name: Identify current branch name
+          command: echo 'export CURRENT_BRANCH_NAME=`git rev-parse --abbrev-ref HEAD`' >> $BASH_ENV
+      - run:
           name: Define Heroku app name to create
           command: timestamp=`date +%Y%m%d%H%M%S` && echo "export HEROKU_APP_NAME=potepanec-$timestamp" >> $BASH_ENV
       - run:
@@ -73,7 +76,7 @@ jobs:
           command: heroku apps:create $HEROKU_APP_NAME --stack heroku-18 --addons=jawsdb:kitefin
       - run:
           name: Deploy
-          command: git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git master
+          command: git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git $CURRENT_BRANCH_NAME:master
       - run:
           name: Run post-deploy tasks
           command: |
